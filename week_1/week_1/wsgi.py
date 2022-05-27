@@ -1,5 +1,5 @@
 """
-WSGI config for python_django_kdt project.
+WSGI config for week_1 project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'python_django_kdt.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'week_1.settings')
 
 application = get_wsgi_application()
