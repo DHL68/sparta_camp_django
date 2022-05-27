@@ -13,17 +13,30 @@ def sign_up_view(request):
         password2 = request.POST.get('password2', None)
         bio = request.POST.get('bio', None)
 
+        sign_me = UserModel.objects.get(username=username)
+
         if password != password2:
             return render(request, 'user/signup.html')
+        # 숙제 풀이 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        # elif sign_me.username == username:
+        #     return render(request, 'user/signup.html')
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        # 숙제 해답 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         else:
-            new_user = UserModel()
-            new_user.username = username
-            new_user.password = password
-            new_user.password2 = password2
-            new_user.bio = bio
-            new_user.save()
+            exist_user = UserModel.objects.filter(username=username)
 
-        return redirect('/sign-in')
+            if exist_user:
+                return render(request, 'user/signup.html')
+            else:
+                new_user = UserModel()
+                new_user.username = username
+                new_user.password = password
+                new_user.password2 = password2
+                new_user.bio = bio
+                new_user.save()
+                return redirect('/sign-in')
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 
 
 def sign_in_view(request):
@@ -31,10 +44,10 @@ def sign_in_view(request):
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
 
-        me = UserModel.objects.get(username=username)
-        if me.password == password:
-            request.session['user'] = me.username
-            return HttpResponse("로그인 성공")
+        me = UserModel.objects.get(username=username) # 사용자 불러오기
+        if me.password == password: # 저장된 사용자의 패스워드와 입력받은 패스워드 비교
+            request.session['user'] = me.username # 세션에 사용자 이름 저장
+            return HttpResponse(me.username + "로그인 성공")
         else:
             return redirect(request, '/sign-in')
 
