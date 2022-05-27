@@ -7,7 +7,9 @@
     <div class="container">
         <div class="wrap">
             <h2 class="title-center"> 회원가입 </h2>
-            <form class="form-area">
+            <form class="form-area" method="POST" action="/sign-up/">
+                {% csrf_token %}
+{#                post 방식으로 보낼 때 보안을 위해 작성하는 방법#}
                 <div class="form-group mt-2 mb-2">
                     <label for="username">이름</label>
                     <input type="text" class="form-control" id="username" name="username">
